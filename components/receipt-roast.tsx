@@ -17,7 +17,7 @@ export function ReceiptRoast({ receiptId }: { receiptId?: string }) {
     setLoading(true); setError("");
     try {
       const response = await fetch(`/api/receipts/${receiptId}/roast`, { method: "POST" });
-      const body = await response.json();
+      const body = await response.json() as Roast & { error?: string };
       if (!response.ok) throw new Error(body.error || "Could not roast this receipt.");
       setRoast(body);
     } catch (reason) {

@@ -30,13 +30,13 @@ Upload the evidence and let `Receiptly` interrogate it. Gemini turns the receipt
 For Software:
 
 - Languages: TypeScript, TSX, CSS, SQL
-- Frameworks: React 19, Next.js 16, Vinext, Vite
+- Frameworks: React 19 and Next.js 16
 - UI libraries: Tailwind CSS, Radix UI, Lucide React
-- Validation and data: Zod, Drizzle ORM
+- Validation and data: Zod
 - AI: Google Gemini API using `gemini-3.6-flash`
-- Storage: Cloudflare D1 for structured receipt data and Cloudflare R2 for receipt images and PDFs
-- Runtime: Cloudflare Workers-compatible server runtime
-- Tools: Node.js, npm, Git, ESLint, Wrangler
+- Storage: Vercel Blob for receipt records, images, and PDFs
+- Runtime: Vercel Functions using the standard Next.js Node.js runtime
+- Tools: Node.js, npm, Git, and ESLint
 
 For Hardware:
 
@@ -46,7 +46,7 @@ For Hardware:
 
 ### Implementation
 
-The browser accepts JPG, PNG, WebP, and PDF receipts up to 10 MB. A server-side API sends the receipt to Gemini with a strict JSON response schema, keeping the API key out of the browser. The extracted metadata is saved in D1 while the original file is saved in R2. Individual receipt APIs retrieve the complete record and image for the archive.
+The browser accepts JPG, PNG, WebP, and PDF receipts up to 10 MB. A server-side API sends the receipt to Gemini with a strict JSON response schema, keeping the API key out of the browser. The extracted metadata and original file are saved in Vercel Blob. Individual receipt APIs retrieve the complete record and image for the archive. Local development falls back to the ignored `.data` directory when a Blob token is not configured.
 
 The two games run entirely in the browser using saved receipt data and never modify the original records. **What’s Missing?** builds answer choices from real stored item names, while **Price Guess** dynamically creates nearby currency-aware prices. **Roast My Receipt** uses a server-side Gemini request containing only item names, quantities, prices, currency, and total, with explicit safe-humor rules.
 
@@ -63,9 +63,10 @@ Create a key in [Google AI Studio](https://aistudio.google.com/app/apikey), then
 
 ```env
 GEMINI_API_KEY=your_gemini_api_key_here
+BLOB_READ_WRITE_TOKEN=your_vercel_blob_token
 ```
 
-Never commit `.env.local` or expose the key in browser code.
+For Vercel, create a Blob store from the project’s Storage tab and connect it to the project. Vercel will provide `BLOB_READ_WRITE_TOKEN`. Add `GEMINI_API_KEY` in Project Settings → Environment Variables. Never commit `.env.local` or expose either token in browser code.
 
 ### Run
 

@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
-import { env } from "cloudflare:workers";
+import { getReceipt } from "@/lib/receipt-store";
 
-type ReceiptRow = { itemsJson: string; total: number | null; currency: string };
+export const runtime = "nodejs";
 
 const responseSchema = {
   type: "OBJECT",
@@ -16,13 +16,10 @@ export async function POST(_: Request, { params }: { params: Promise<{ id: strin
   try {
     const key = process.env.GEMINI_API_KEY;
     if (!key) return NextResponse.json({ error: "Gemini is not configured." }, { status: 503 });
-    if (!env.DB) return NextResponse.json({ error: "Receipt storage is unavailable." }, { status: 503 });
     const { id } = await params;
-    if (!/^[0-9a-f-]{36}$/.test(id)) return NextResponse.json({ error: "Receipt not found." }, { status: 404 });
-    const receipt = await env.DB.prepare("SELECT items_json AS itemsJson, total_cents AS total, currency FROM receipts WHERE id = ?").bind(id).first<ReceiptRow>();
+    const receipt = await getReceipt(id);
     if (!receipt) return NextResponse.json({ error: "Receipt not found." }, { status: 404 });
-    const items = JSON.parse(receipt.itemsJson) as { name: string; quantity: number; price: number }[];
-    const safeData = { items: items.map(({ name, quantity, price }) => ({ name, quantity, price })), total: receipt.total == null ? null : receipt.total / 100, currency: receipt.currency };
+    const safeData = { items: receipt.items.map(({ name, quantity, price }) => ({ name, quantity, price })), total: receipt.total, currency: receipt.currency };
     const response = await fetch("https://generativelanguage.googleapis.com/v1beta/models/gemini-3.6-flash:generateContent", {
       method: "POST",
       headers: { "Content-Type": "application/json", "x-goog-api-key": key },

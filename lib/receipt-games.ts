@@ -26,7 +26,7 @@ export function buildMissingOptions(correct: string, candidateNames: string[], c
 }
 
 function currencyDecimals(currency: string): number {
-  try { return new Intl.NumberFormat(undefined, { style: "currency", currency }).resolvedOptions().maximumFractionDigits; }
+  try { return new Intl.NumberFormat(undefined, { style: "currency", currency }).resolvedOptions().maximumFractionDigits ?? 2; }
   catch { return 2; }
 }
 
