@@ -194,3 +194,243 @@ main button[class*="rounded-[20px]"]:hover::after { opacity: 1; }
 @media (max-width: 640px) {
   main.min-h-screen { background-attachment: scroll; }
 }
+
+/* Retro receipt terminal theme */
+:root {
+  --background: #f4ecd9;
+  --foreground: #202235;
+  --card: #fffaf0;
+  --card-foreground: #202235;
+  --primary: #e9583f;
+  --primary-foreground: #fffaf0;
+  --secondary: #efe3ca;
+  --secondary-foreground: #202235;
+  --muted: #eee4d0;
+  --muted-foreground: #696775;
+  --accent: #f0b849;
+  --accent-foreground: #202235;
+  --border: #28293d;
+  --input: #28293d;
+  --ring: #1c8880;
+  --radius: 0.45rem;
+}
+
+body {
+  font-family: "Courier New", Courier, ui-monospace, monospace;
+}
+
+main.min-h-screen {
+  background-color: #f4ecd9;
+  background-image:
+    linear-gradient(rgba(32, 34, 53, 0.035) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(32, 34, 53, 0.035) 1px, transparent 1px),
+    radial-gradient(circle at 12% 7%, rgba(240, 184, 73, 0.35), transparent 22rem),
+    radial-gradient(circle at 88% 16%, rgba(28, 136, 128, 0.2), transparent 26rem),
+    linear-gradient(145deg, #f8f0dc, #efe2c7);
+  background-size: 24px 24px, 24px 24px, auto, auto, auto;
+  color: #202235;
+}
+
+main.min-h-screen > header {
+  border-bottom: 3px solid #28293d;
+  background: linear-gradient(90deg, #fffaf0 0%, #f8efdc 72%, #f0b849 72%, #f0b849 100%);
+  box-shadow: 0 4px 0 rgba(40, 41, 61, 0.12);
+}
+
+main.min-h-screen > header [class*="bg-[#155eef]"] {
+  border: 2px solid #28293d;
+  border-radius: 5px;
+  background: #e9583f;
+  box-shadow: 3px 3px 0 #28293d;
+}
+
+main h1, main h2, main h3 { letter-spacing: -0.045em; }
+main p[class*="uppercase"] { color: #c74632; letter-spacing: 0.12em; }
+
+main [class*="rounded-[24px]"][class*="bg-white"],
+main [class*="rounded-[20px]"][class*="bg-white"] {
+  border: 2px solid #28293d;
+  border-radius: 8px;
+  background: linear-gradient(145deg, #fffdf7, #f8efd9);
+  box-shadow: 7px 7px 0 rgba(40, 41, 61, 0.85);
+}
+
+main button[class*="border-dashed"] {
+  border: 2px dashed #28293d;
+  border-radius: 5px;
+  background: repeating-linear-gradient(-45deg, #fffaf0, #fffaf0 12px, #fbf3e3 12px, #fbf3e3 24px);
+}
+
+main button[class*="border-dashed"]:hover {
+  border-color: #e9583f;
+  background: #fff4dc;
+}
+
+main aside[class*="bg-[#10213b]"] {
+  border: 2px solid #28293d;
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 90% 0%, rgba(240, 184, 73, 0.23), transparent 16rem),
+    linear-gradient(145deg, #292b45, #171827 75%);
+  box-shadow: 7px 7px 0 #e9583f;
+}
+
+main button[class*="bg-[#155eef]"] {
+  border: 2px solid #28293d;
+  border-radius: 5px;
+  background: linear-gradient(180deg, #f46a50, #df4e37);
+  box-shadow: 4px 4px 0 #28293d;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+main button[class*="bg-[#155eef]"]:hover {
+  translate: 2px 2px;
+  background: linear-gradient(180deg, #ea6047, #cf422e);
+  box-shadow: 2px 2px 0 #28293d;
+}
+
+main button[class*="rounded-[20px]"] {
+  border-radius: 7px;
+  transition: translate 160ms ease, box-shadow 160ms ease, border-color 160ms ease;
+}
+
+main button[class*="rounded-[20px]"]:hover {
+  translate: -2px -2px;
+  border-color: #1c8880;
+  box-shadow: 9px 9px 0 #1c8880;
+}
+
+main [class*="bg-[#edf4ff]"], main [class*="bg-[#e7effd]"] {
+  border: 1px solid #28293d;
+  background: #f4c866;
+  color: #29263a;
+}
+
+main [class*="bg-[#f4f7fb]"], main [class*="bg-[#f8fafd]"] {
+  background: #f2e7d1;
+}
+
+[data-slot="dialog-overlay"] {
+  background: rgba(24, 24, 39, 0.68);
+  backdrop-filter: blur(3px);
+}
+
+[data-slot="dialog-content"] {
+  border: 2px solid #28293d;
+  border-radius: 8px;
+  box-shadow: 10px 10px 0 rgba(28, 136, 128, 0.8);
+}
+
+@media (max-width: 640px) {
+  main.min-h-screen > header {
+    background: linear-gradient(90deg, #fffaf0, #f8efdc);
+  }
+  main [class*="rounded-[24px]"][class*="bg-white"],
+  main [class*="rounded-[20px]"][class*="bg-white"] {
+    box-shadow: 4px 4px 0 rgba(40, 41, 61, 0.85);
+  }
+}
+
+/* High-contrast pass */
+:root {
+  --background: #eadfca;
+  --foreground: #111321;
+  --card: #fffdf6;
+  --card-foreground: #111321;
+  --primary: #c93825;
+  --primary-foreground: #ffffff;
+  --muted: #e3d5ba;
+  --muted-foreground: #454655;
+  --accent: #f5bd35;
+  --accent-foreground: #111321;
+  --border: #111321;
+  --input: #111321;
+  --ring: #006d66;
+}
+
+main.min-h-screen {
+  color: #111321;
+  background-color: #eadfca;
+  background-image:
+    linear-gradient(rgba(17, 19, 33, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(17, 19, 33, 0.055) 1px, transparent 1px),
+    radial-gradient(circle at 10% 5%, rgba(245, 189, 53, 0.42), transparent 21rem),
+    radial-gradient(circle at 90% 14%, rgba(0, 109, 102, 0.22), transparent 25rem),
+    linear-gradient(145deg, #f1e6ce, #e2d3b4);
+}
+
+main.min-h-screen > header {
+  border-color: #111321;
+  background: linear-gradient(90deg, #fffdf6 0%, #fff7e5 72%, #f5bd35 72%, #f5bd35 100%);
+}
+
+main [class*="rounded-[24px]"][class*="bg-white"],
+main [class*="rounded-[20px]"][class*="bg-white"] {
+  border-color: #111321;
+  background: #fffdf6;
+  box-shadow: 7px 7px 0 #111321;
+}
+
+main [class*="text-[#66758b]"],
+main [class*="text-[#738197]"],
+main [class*="text-[#52637b]"],
+main [class*="text-[#91a1b6]"] {
+  color: #444553;
+}
+
+main button[class*="border-dashed"] {
+  border-color: #111321;
+  background: repeating-linear-gradient(-45deg, #fffdf6, #fffdf6 12px, #f5ead2 12px, #f5ead2 24px);
+  color: #111321;
+}
+
+main button[class*="bg-[#155eef]"] {
+  border-color: #111321;
+  background: linear-gradient(180deg, #e44a34, #bd301f);
+  color: #fff;
+  box-shadow: 4px 4px 0 #111321;
+}
+
+main button[class*="bg-[#155eef]"]:hover {
+  background: linear-gradient(180deg, #d83d29, #aa291b);
+}
+
+main aside[class*="bg-[#10213b]"] {
+  background:
+    radial-gradient(circle at 90% 0%, rgba(245, 189, 53, 0.3), transparent 16rem),
+    linear-gradient(145deg, #25283e, #0d0e18 76%);
+  box-shadow: 7px 7px 0 #c93825;
+}
+
+main aside[class*="bg-[#10213b]"] [class*="text-[#aab7c8]"],
+main aside[class*="bg-[#10213b]"] [class*="text-[#c6d0dc]"] {
+  color: #e0e6ef;
+}
+
+main [class*="bg-[#edf4ff]"], main [class*="bg-[#e7effd]"] {
+  border-color: #111321;
+  background: #ffd15a;
+  color: #111321;
+}
+
+main [class*="bg-[#f4f7fb]"], main [class*="bg-[#f8fafd]"] {
+  background: #eadcc0;
+}
+
+main table thead {
+  background: #ded0b4;
+  color: #282a38;
+}
+
+main table tr { border-color: #9a907d; }
+
+button:focus-visible, a:focus-visible, input:focus-visible {
+  outline: 3px solid #006d66;
+  outline-offset: 3px;
+}
+
+[data-slot="dialog-content"] {
+  border-color: #111321;
+  box-shadow: 10px 10px 0 #006d66;
+}
