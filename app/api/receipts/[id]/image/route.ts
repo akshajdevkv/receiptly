@@ -1,0 +1,2 @@
+import {env} from "cloudflare:workers";
+export async function GET(_:Request,{params}:{params:Promise<{id:string}>}){if(!env.BUCKET)return new Response("Storage unavailable",{status:503});const{id}=await params;if(!/^[0-9a-f-]{36}$/.test(id))return new Response("Not found",{status:404});const object=await env.BUCKET.get(`receipts/${id}`);if(!object)return new Response("Not found",{status:404});const headers=new Headers();object.writeHttpMetadata(headers);headers.set("Cache-Control","private, max-age=3600");return new Response(object.body,{headers})}
