@@ -131,7 +131,13 @@ Not applicable. The project runs on a standard computer or phone through a web b
 
 ### Video
 
-[Add your demo video link here]
+
+
+https://github.com/user-attachments/assets/55d45cf2-c269-4330-a58a-e95df99f42ba
+
+
+
+
 
 *The video should demonstrate uploading and extracting a receipt, opening it from the archive, playing both receipt games, and generating a receipt roast.*
 
