@@ -25,7 +25,7 @@ const localRoot = path.join(process.cwd(), ".data", "receipts");
 const usesBlob = () => Boolean(process.env.BLOB_READ_WRITE_TOKEN);
 
 export function ensureReceiptStorage() {
-  if (process.env.VERCEL && !usesBlob()) {
+  if (process.env.NODE_ENV === "production" && !usesBlob()) {
     throw new Error("Receipt storage is not configured. Connect a Vercel Blob store to this project, then redeploy.");
   }
 }
