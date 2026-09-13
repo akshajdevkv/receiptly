@@ -24,6 +24,12 @@ export type StoredReceipt = {
 const localRoot = path.join(process.cwd(), ".data", "receipts");
 const usesBlob = () => Boolean(process.env.BLOB_READ_WRITE_TOKEN);
 
+export function ensureReceiptStorage() {
+  if (process.env.VERCEL && !usesBlob()) {
+    throw new Error("Receipt storage is not configured. Connect a Vercel Blob store to this project, then redeploy.");
+  }
+}
+
 function extension(file: File) {
   const known: Record<string, string> = {
     "image/jpeg": "jpg", "image/png": "png", "image/webp": "webp", "application/pdf": "pdf",
@@ -32,6 +38,7 @@ function extension(file: File) {
 }
 
 export async function saveReceipt(data: Omit<StoredReceipt, "imageType" | "imageBlobUrl" | "imageFileName">, file: File) {
+  ensureReceiptStorage();
   const fileName = `original.${extension(file)}`;
   const receipt: StoredReceipt = { ...data, imageType: file.type, imageFileName: fileName };
   if (usesBlob()) {
@@ -54,6 +61,7 @@ export async function saveReceipt(data: Omit<StoredReceipt, "imageType" | "image
 
 export async function getReceipt(id: string): Promise<StoredReceipt | null> {
   if (!/^[0-9a-f-]{36}$/.test(id)) return null;
+  ensureReceiptStorage();
   if (usesBlob()) {
     const result = await list({ prefix: `receipts/${id}/data.json`, limit: 1 });
     if (!result.blobs[0]) return null;
@@ -65,6 +73,7 @@ export async function getReceipt(id: string): Promise<StoredReceipt | null> {
 }
 
 export async function listReceipts(): Promise<StoredReceipt[]> {
+  ensureReceiptStorage();
   if (usesBlob()) {
     const result = await list({ prefix: "receipts/", limit: 1000 });
     const metadata = result.blobs.filter((blob) => blob.pathname.endsWith("/data.json"));

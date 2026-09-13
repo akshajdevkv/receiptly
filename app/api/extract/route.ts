@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { saveReceipt } from "@/lib/receipt-store";
+import { ensureReceiptStorage, saveReceipt } from "@/lib/receipt-store";
 
 export const runtime = "nodejs";
 
@@ -9,6 +9,7 @@ export async function POST(request:Request){
   try{
     const key=process.env.GEMINI_API_KEY;
     if(!key)return NextResponse.json({error:"Gemini is not configured. Add GEMINI_API_KEY to your environment."},{status:503});
+    try{ensureReceiptStorage()}catch(error){return NextResponse.json({error:error instanceof Error?error.message:"Receipt storage is not configured."},{status:503})}
     const form=await request.formData();const file=form.get("receipt");
     if(!(file instanceof File))return NextResponse.json({error:"Choose a receipt first."},{status:400});
     if(file.size>10485760)return NextResponse.json({error:"Receipt must be under 10 MB."},{status:413});
